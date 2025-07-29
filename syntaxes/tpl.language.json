@@ -1,0 +1,140 @@
+{
+  "scopeName": "text.html.tpl",
+  "patterns": [
+    { "include": "#script-tag" },
+    { "include": "#style-tag" },
+    { "include": "#template_comment" },
+    { "include": "#template_syntax" },
+    { "include": "#html_with_template" }
+  ],
+  "repository": {
+    "html_with_template": {
+      "patterns": [
+        { "include": "#self_closing_tag" },
+        { "include": "#html_tag_with_attributes" },
+        { "include": "text.html.basic" }
+      ]
+    },
+    "self_closing_tag": {
+      "begin": "(<)(area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr|circle|ellipse|line|path|polygon|polyline|rect|stop|use)\\b",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.html" },
+        "2": { "name": "entity.name.tag.html" }
+      },
+      "end": "(/?>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.end.html" }
+      },
+      "name": "meta.tag.void.html",
+      "patterns": [
+        { "include": "#html_attribute_with_template" },
+        { "include": "text.html.basic#attribute" }
+      ]
+    },
+    "html_tag_with_attributes": {
+      "begin": "(<)([a-zA-Z][a-zA-Z0-9_-]*)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.html" },
+        "2": { "name": "entity.name.tag.html" }
+      },
+      "end": "(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.end.html" }
+      },
+      "name": "meta.tag.html",
+      "patterns": [
+        { "include": "#template_syntax" },
+        { "include": "#template_comment" },
+        { "include": "#html_attribute_with_template" },
+        { "include": "text.html.basic#attribute" }
+      ]
+    },
+    "html_attribute_with_template": {
+      "begin": "([a-zA-Z][a-zA-Z0-9_-]*)\\s*(=)\\s*([\"'])",
+      "beginCaptures": {
+        "1": { "name": "entity.other.attribute-name.html" },
+        "2": { "name": "punctuation.separator.key-value.html" },
+        "3": { "name": "punctuation.definition.string.begin.html" }
+      },
+      "end": "\\3",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.html" }
+      },
+      "name": "string.quoted.html",
+      "patterns": [
+        { "include": "#template_syntax" },
+        { "include": "#template_comment" }
+      ]
+    },
+    "script-tag": {
+      "begin": "(?i)(<)(script)\\b([^>]*)(>)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.html" },
+        "2": { "name": "entity.name.tag.script.html" },
+        "3": { 
+          "patterns": [
+            { "include": "#html_attribute_with_template" }
+          ]
+        },
+        "4": { "name": "punctuation.definition.tag.end.html" }
+      },
+      "end": "(?i)(</)(script)(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.html" },
+        "2": { "name": "entity.name.tag.script.html" },
+        "3": { "name": "punctuation.definition.tag.end.html" }
+      },
+      "name": "meta.embedded.block.javascript",
+      "contentName": "source.js",
+      "patterns": [
+        { "include": "source.js" }
+      ]
+    },
+    "style-tag": {
+      "begin": "(?i)(<)(style)\\b([^>]*)(>)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.html" },
+        "2": { "name": "entity.name.tag.style.html" },
+        "3": { 
+          "patterns": [
+            { "include": "#html_attribute_with_template" }
+          ]
+        },
+        "4": { "name": "punctuation.definition.tag.end.html" }
+      },
+      "end": "(?i)(</)(style)(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.html" },
+        "2": { "name": "entity.name.tag.style.html" },
+        "3": { "name": "punctuation.definition.tag.end.html" }
+      },
+      "name": "meta.embedded.block.css",
+      "contentName": "source.css",
+      "patterns": [
+        { "include": "source.css" }
+      ]
+    },
+    "template_comment": {
+      "begin": "\\{\\*",
+      "beginCaptures": { 
+        "0": { "name": "comment.block.template" }
+      },
+      "end": "\\*\\}",
+      "endCaptures": {
+        "0": { "name": "comment.block.template" }
+      },
+      "name": "comment.block.template"
+    },
+    "template_syntax": {
+      "begin": "\\{",
+      "beginCaptures": {
+        "0": { "name": "keyword.control.template" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "keyword.control.template" }
+      },
+      "name": "keyword.control.template"
+    }
+  }
+}
